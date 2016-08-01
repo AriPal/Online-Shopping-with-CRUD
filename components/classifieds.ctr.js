@@ -5,8 +5,6 @@
       .module("ngClassifieds") // It gives us a reference of the declared module in app.js
       .controller("classifiedsCtrl", function($scope) {
 
-      
-
         $scope.classifieds = [
   {
     "id":"1",
@@ -18,7 +16,7 @@
       "name":"John Doe",
       "phone":"(555) 555-5555",
       "email":"johndoe@gmail.com"
-  },
+    },
     "categories":[
       "Vehicles",
       "Parts and Accessories"
@@ -74,7 +72,7 @@
     "categories":[
       "Furniture"
     ],
-    "image":"http://www.huntmedia.co/wp-content/uploads/2015/09/beautiful-leather-couch-and-loveseat-on-leather-sofa-size-guide-leather-couch-and-loveseat.jpg",
+    "image":"http://www.harmoniccycle.com/hc/images/satelite/Satelite_050423a_800x450.jpg",
     "views":77
   },
   {
