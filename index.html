@@ -24,17 +24,50 @@
           <img ng-src="{{ classified.image }}" alt=""> <!--"ng-src" waits for the website to be loaded before loading images.-->
           <md-card-content>
 
-            <div class="classified-info">
+            <div class="classified-info" ng-show="!showContact"> <!--Or we could write showContact == false-->
               <h2 class="md-title"> {{ classified.title }} </h2>
               <h2> {{ classified.posted | date: "longDate"}}</h2>
               <h3> {{ classified.price | currency: "NOK " }}</h3>
               <p>{{ classified.description }}</p>
-              <!--<pre> {{classified | json}} </pre> //Displays code in json format-->
+              <!--<pre> {{classified | json}} </pre> //Displays code in json format, useful for developers-->
             </div>
-            <div class="classified-contact">
+
+            <div class="classified-contact" ng-show="showContact"> <!--If showcontact is set to true, the area between the div elements are shown-->
               <p><md-icon class="mdi mdi-account"></md-icon> {{ classified.contact.name }}</p>
               <p><md-icon class="mdi mdi-phone"></md-icon> {{ classified.contact.phone }}</p>
               <p><md-icon class="mdi mdi-email"></md-icon> {{ classified.contact.name }}</p>
+            </div>
+
+            <div layout="row"> <!--Buttons-->
+              <md-button
+                ng-click="showContact = true"
+                ng-show="!showContact"><!--This hides the button if the contacts are shown-->
+                Show Contact
+              </md-button>
+              <md-button
+                ng-click="showContact = false"
+                ng-show="showContact">
+                Details
+              </md-button>
+              <md-button
+                ng-click="showAdmin = true"
+                ng-show="!showAdmin">
+                Admin
+              </md-button>
+              <md-button
+              ng-click="showAdmin = false"
+              ng-show="showAdmin">
+              Close
+            </md-button>
+            </div>
+
+            <div class="classified-admin" ng-if="showAdmin"><!--Almost the same as ng-show, but it removes everything inside the div elements from the DOM -->
+              <h3>Admin</h3>
+              <div layout ="row">
+                <md-button class="md-primary">Edit</md-button>
+                <md-button class="md-warn">Delete</md-button>
+              </div>
+
             </div>
 
           </md-card-content>
