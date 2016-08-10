@@ -49,10 +49,10 @@
               <input type="text" id="image"
               ng-model="classified.image">
             </md-input-container>
-            <md-button ng-click="saveClassified(classified)" class="md-primary">
+            <md-button ng-if="!editing" ng-click="saveClassified(classified)" class="md-primary" >
               Save
             </md-button>
-            <md-button class="md-primary">
+            <md-button ng-click="saveEdit()" ng-if="editing" class="md-primary">
               Save Edit
             </md-button>
             <md-button ng-click="closeSidebar()" class="md-warn">
@@ -108,10 +108,9 @@
             <div class="classified-admin" ng-if="showAdmin"><!--Almost the same as ng-show, but it removes everything inside the div elements from the DOM -->
               <h3>Admin</h3>
               <div layout ="row">
-                <md-button class="md-primary">Edit</md-button>
-                <md-button class="md-warn">Delete</md-button>
+                <md-button ng-click="editClassified(classified)" class="md-primary">Edit</md-button>
+                <md-button ng-click="deleteData($event, classified)" class="md-warn">Delete</md-button>
               </div>
-
             </div>
 
           </md-card-content>
