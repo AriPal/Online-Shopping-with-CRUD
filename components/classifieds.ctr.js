@@ -13,6 +13,7 @@
         /*$http.get('data/classifieds.json')*/
         classifiedsFactory.getClassifieds().then(function(classifieds){
             $scope.classifieds = classifieds.data; // We have some "ReturnedData" data that is being returned, and we need to access the data property thats on it.
+            $scope.categories = getCategories($scope.classifieds);
         });
 
         var contact = {
@@ -71,6 +72,7 @@
           });
         }
 
+        // Create a method callback instead of inserting the text into methods.
         function showToast(message){
           $mdToast.show(
             $mdToast.simple()
@@ -78,6 +80,17 @@
             .position('top, right')
             .hideDelay(3000)
           );
+        }
+
+        function getCategories(classifieds) {
+          var categories = [];
+
+          angular.forEach(classifieds, function(item) {
+            angular.forEach(item.categories, function(category) {
+              categories.push(category);
+            });
+          });
+          return _.uniq(categories); // returns unique (aggregates) values, lodash script.
         }
 
       });

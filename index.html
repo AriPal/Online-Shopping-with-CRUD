@@ -16,18 +16,33 @@
             <md-icon class="mdi mdi-plus-circle"></md-icon>
              New Classified
           </md-button>
-          <md-button ng-click="showFilters == true">
+          <md-button ng-click="showFilters = true">
             <md-icon class="mdi mdi-magnify"></md-icon>
              Filters
           </md-button>
         </div>
-      </md-toolbar>
 
-      <div class="filters" layout="row" layout="center center" ng-show="showFilters"></div>
+      </md-toolbar>
+      <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
       <md-input-container>
         <label>Enter Search Term</label>
         <input type="text" ng-model="classifiedsFilter">
       </md-input-container>
+
+      <md-input-container>
+        <label>Category</label>
+        <md-select ng-model="category">
+          <md-option ng-repeat="category in categories" value="{{category}}">
+            {{category}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container>
+        <md-button
+        class="md-warn"
+        ng-click="classifiedsFilter = ''; category ='';">Clear</md-button>
+      </md-input-container>
+      </div>
 
       <md-sidenav
       class="md-sidenav-left md-whiteframe-z2"
@@ -74,7 +89,7 @@
       </md-sidenav>
 
       <md-content class="md-padding" layout="row" layout-wrap><!--layout="row" means that all content is stacked horizontally-->
-        <md-card ng-repeat ="classified in classifieds" flex="30"> <!--classified is an alias-->
+        <md-card ng-repeat ="classified in classifieds | filter: classifiedsFilter" flex="30"> <!--classified is an alias-->
           <img ng-src="{{ classified.image }}" alt=""> <!--"ng-src" waits for the website to be loaded before loading images.-->
           <md-card-content>
 
@@ -136,5 +151,7 @@
     <script src="scripts/app.js"></script>
     <script src="components/classifieds.ctr.js"></script>
     <script src="components/classifieds.fac.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"></script>
+
   </body>
 </html>
