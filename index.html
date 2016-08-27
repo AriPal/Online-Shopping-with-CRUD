@@ -21,8 +21,12 @@
              Filters
           </md-button>
         </div>
-
       </md-toolbar>
+
+      <md-button ui-sref="one">go to state one</md-button>
+      <md-button ui-sref="two">go to state two</md-button>
+      <ui-view></ui-view>
+
       <div class="filters" layout="row" layout-align="center center" ng-show="showFilters">
       <md-input-container>
         <label>Enter Search Term</label>
@@ -89,7 +93,11 @@
       </md-sidenav>
 
       <md-content class="md-padding" layout="row" layout-wrap><!--layout="row" means that all content is stacked horizontally-->
-        <md-card ng-repeat ="classified in classifieds | filter: classifiedsFilter" flex="30"> <!--classified is an alias-->
+        <md-card ng-repeat ="classified in classifieds |
+        filter: classifiedsFilter |
+        filter: category"
+        flex="30"
+        class="classified"> <!--classified is an alias-->
           <img ng-src="{{ classified.image }}" alt=""> <!--"ng-src" waits for the website to be loaded before loading images.-->
           <md-card-content>
 
@@ -137,7 +145,6 @@
                 <md-button ng-click="deleteData($event, classified)" class="md-warn">Delete</md-button>
               </div>
             </div>
-
           </md-card-content>
         </md-card>
       </md-content>
@@ -152,6 +159,7 @@
     <script src="components/classifieds.ctr.js"></script>
     <script src="components/classifieds.fac.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.15.0/lodash.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
 
   </body>
 </html>
