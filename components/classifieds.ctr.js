@@ -1,3 +1,10 @@
+/* http methods:
+1. POST - Sending data
+2. GET - Retrieve data
+3. PUT - Edite data
+4. DELETE - Delete data*/
+/*$http.get('data/classifieds.json')*/
+
 (function(){
   "use strict";
 
@@ -5,15 +12,21 @@
       .module("ngClassifieds") // It gives us a reference of the declared module in app.js
       .controller("classifiedsCtrl", function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 
-        /* http methods:
-        1. POST - Sending data
-        2. GET - Retrieve data
-        3. PUT - Edite data
-        4. DELETE - Delete data*/
-        /*$http.get('data/classifieds.json')*/
+        var vm = this;
+        vm.categories;
+        vm.classified;
+        vm.classifieds;
+        vm.closeSidebar = closeSidebar;
+        vm.deleteData = deleteData;
+        vm.editClassified = editClassified;
+        vm.editing;
+        vm.openSidebar = openSidebar;
+        vm.saveClassified = saveClassified;
+        vm.saveEdit = saveEdit;
+
         classifiedsFactory.getClassifieds().then(function(classifieds){
-            $scope.classifieds = classifieds.data; // We have some "ReturnedData" data that is being returned, and we need to access the data property thats on it.
-            $scope.categories = getCategories($scope.classifieds);
+            vm.classifieds = classifieds.data; // We have some "ReturnedData" data that is being returned, and we need to access the data property thats on it.
+            vm.categories = getCategories(vm.classifieds);
         });
 
         var contact = {
@@ -23,40 +36,40 @@
         }
 
         // Open sidenav, connected to the button in toolbar
-        $scope.openSidebar = function(){
+        function openSidebar(){
           $mdSidenav('left').open();
         }
         // Closes the sidenav, connected to cancel button
-        $scope.closeSidebar = function() {
+        function closeSidebar() {
           $mdSidenav('left').close();
         }
 
-        $scope.saveClassified = function(classified){
+        function saveClassified(classified){
 
           // Add if statement to prevent data being stored in wrong-manner.
           if (classified) {
               classified.contact = contact; // Pretending to be info from user profile
-              $scope.classifieds.push(classified);
-              $scope.classified = {}; // Reset form
-              $scope.closeSidebar();
+              vm.classifieds.push(classified);
+              vm.classified = {}; // Reset form
+              closeSidebar();
               showToast("Classified Saved!");
           }
         }
 
-        $scope.editClassified = function(classified){
-          $scope.editing = true;
-          $scope.openSidebar();
-          $scope.classified = classified;
+        function editClassified(classified){
+          vm.editing = true;
+          openSidebar();
+          vm.classified = classified;
         }
 
-        $scope.saveEdit = function(){
-          $scope.editing = false;
-          $scope.classified = {};
-          $scope.closeSidebar();
+        function saveEdit(){
+          vm.editing = false;
+          vm.classified = {};
+          closeSidebar();
           showToast("Edit Saved!");
         }
 
-        $scope.deleteData = function(event, data){
+        function deleteData(event, data){
           var confirm = $mdDialog.confirm()
           .title("Are you sure you want to delete item: " + data.title + "?")
           .textContent("Item description " + data.description)
@@ -65,8 +78,8 @@
           .cancel("No");
           // The show method returns a promise, we add the rest of the code with the "then" method.
           $mdDialog.show(confirm).then(function() {
-            var index = $scope.classifieds.indexOf(data); // Finding the index of classified
-            $scope.classifieds.splice(index, 1);
+            var index = vm.classifieds.indexOf(data); // Finding the index of classified
+            vm.classifieds.splice(index, 1);
           }, function() {
             // Cancel is runned here.
           });
