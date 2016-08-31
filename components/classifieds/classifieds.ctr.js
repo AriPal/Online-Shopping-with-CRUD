@@ -10,7 +10,7 @@
 
   angular
       .module("ngClassifieds") // It gives us a reference of the declared module in app.js
-      .controller("classifiedsCtrl", function($scope, $http, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
+      .controller("classifiedsCtrl", function($scope, $http, $state, classifiedsFactory, $mdSidenav, $mdToast, $mdDialog) {
 
         var vm = this;
         vm.categories;
@@ -37,7 +37,7 @@
 
         // Open sidenav, connected to the button in toolbar
         function openSidebar(){
-          $mdSidenav('left').open();
+          $state.go("classifieds.new");
         }
         // Closes the sidenav, connected to cancel button
         function closeSidebar() {
