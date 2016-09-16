@@ -29,6 +29,12 @@
             vm.categories = getCategories(vm.classifieds);
         });
 
+        $scope.$on('newClassified', function(event, classified) {
+          classified.id = vm.classifieds.length + 1;
+          vm.classifieds.push(classified);
+          showToast('Classified saved!');
+        });
+
         var contact = {
           name: "Anderson Silva",
           phone: "(444) 400-740",
@@ -105,6 +111,8 @@
           });
           return _.uniq(categories); // returns unique (aggregates) values, lodash script.
         }
+
+
 
       });
 })();
